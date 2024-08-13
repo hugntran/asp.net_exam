@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Staff_Management.Entities.Departments>
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<a href="@Url.Action("Create")" class="btn btn-primary">Add Department</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Employees</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var department in Model)
+        {
+            <tr>
+                <th scope="row">@department.Id</th>
+                <td>@department.Name</td>
+                <td>@department.Description</td>
+                <td>
+                    <ul>
+                        @foreach (var employee in department.Employees)
+                        {
+                            <li>@employee.Name (@employee.Email)</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = department.Id })" class="btn btn-outline-primary me-2">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = department.Id })" class="btn btn-danger text-dark">Delete</a>
+
+                    <a href="@Url.Action("Create", "Employees", new { departmentId = department.Id })" class="btn btn-success">Add Employee</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
